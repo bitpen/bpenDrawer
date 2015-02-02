@@ -2,6 +2,22 @@
    if(window.bpen == undefined){
      window.bpen = function(){};
    }
+
+   if(window.bpen.core == undefined){
+     window.bpen.core = function(){};
+     window.bpen.core.hasClass = function(ele, cls){
+       return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+     };
+     window.bpen.core.addClass = function(ele, cls){
+       if (!bpen.core.hasClass(ele,cls)) ele.className += " "+cls;
+     };
+     window.bpen.core.removeClass = function(ele, cls){
+        if (bpen.core.hasClass(ele,cls)) {
+            var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+            ele.className=ele.className.replace(reg,' ').trim();
+        }
+     };
+   }
 })(window);
 
 
@@ -128,14 +144,14 @@
         },
 
         open  : function(){
-          addClass(this._container, 'expanded');
-          addClass(this._toggle, 'expanded');
+          window.bpen.core.addClass(this._container, 'expanded');
+          window.bpen.core.addClass(this._toggle, 'expanded');
           this._menuState = 1;
         },
 
         close : function(){
-          removeClass(this._container, 'expanded');
-          removeClass(this._toggle, 'expanded');
+          window.bpen.core.removeClass(this._container, 'expanded');
+          window.bpen.core.removeClass(this._toggle, 'expanded');
           this._menuState = 0;
         }
 
@@ -143,16 +159,3 @@
 
    b.drawer = drw;
 })(bpen, window, document);
-
-function hasClass(ele,cls) {
-    return ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
-}
-function addClass(ele,cls) {
-    if (!hasClass(ele,cls)) ele.className += " "+cls;
-}
-function removeClass(ele,cls) {
-    if (hasClass(ele,cls)) {
-        var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-        ele.className=ele.className.replace(reg,' ').trim();
-    }
-}
