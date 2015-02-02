@@ -153,7 +153,6 @@ function addClass(ele,cls) {
 function removeClass(ele,cls) {
     if (hasClass(ele,cls)) {
         var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-        var test = ele.className.match(reg);
         ele.className=ele.className.replace(reg,' ').trim();
     }
 }
